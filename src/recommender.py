@@ -1,6 +1,6 @@
 import csv
-from typing import List, Dict, Tuple, Optional
-from dataclasses import dataclass
+from typing import List, Dict, Tuple
+from dataclasses import asdict, dataclass
 
 @dataclass
 class Song:
@@ -40,14 +40,29 @@ class Recommender:
         self.songs = songs
 
     def recommend(self, user: UserProfile, k: int = 5) -> List[Song]:
-        """Return the first k songs from the catalog."""
-        # TODO: Implement recommendation logic
-        return self.songs[:k]
+        """Return the top k songs ranked by the shared scoring function."""
+        preferences = {
+            "genre": user.favorite_genre,
+            "mood": user.favorite_mood,
+            "energy": user.target_energy,
+        }
+        song_by_id = {song.id: song for song in self.songs}
+        ranked_results = recommend_songs(
+            preferences,
+            [asdict(song) for song in self.songs],
+            k=k,
+        )
+        return [song_by_id[result["id"]] for result, _, _ in ranked_results]
 
     def explain_recommendation(self, user: UserProfile, song: Song) -> str:
-        """Return a placeholder explanation for a song recommendation."""
-        # TODO: Implement explanation logic
-        return "Explanation placeholder"
+        """Explain a song using the shared score and its component reasons."""
+        preferences = {
+            "genre": user.favorite_genre,
+            "mood": user.favorite_mood,
+            "energy": user.target_energy,
+        }
+        _, reasons = score_song(preferences, asdict(song))
+        return "; ".join(reasons)
 
 def load_songs(csv_path: str) -> List[Dict]:
     """Read songs from a CSV file and convert their numeric fields."""
@@ -77,7 +92,7 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     reasons = []
 
     if song["genre"].lower() == user_prefs["genre"].lower():
-        score += 4
+        score += 4.0
         reasons.append("genre match (+4.00)")
     else:
         reasons.append("genre does not match (+0.00)")
