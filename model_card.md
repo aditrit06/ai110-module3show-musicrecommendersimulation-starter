@@ -1,54 +1,36 @@
-# 🎧 Model Card: Music Recommender Simulation
+# 🎧 Model Card: VibeMatch 1.0
 
-## 1. Model Name  
+## 1. Model Name
+**VibeMatch 1.0 — Music Recommender Simulation**
 
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
+I chose this name because the goal is to match songs to a person's preferred music vibe.
 
 ---
 
-## 2. Intended Use  
-
-Describe what your recommender is designed to do and who it is for. 
-
-Prompts:  
-
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
+## 2. Intended Use
+VibeMatch is a small music recommendation program I made for my AI110 project. It is designed to help someone discover songs in a sample catalog based on their favorite genre, mood, energy level, and valence (how positive a song feels). It assumes a person can describe those preferences and that each song has accurate labels. The program is for learning and experimenting, not for use as a real streaming service. It should not be used to predict someone's entire personality or make important decisions about them.
 
 ---
 
 ## 3. How the Model Works  
 
-My music recommender uses content-based filtering to compare each song's genre, mood, energy, and valence with the user's preferences. In my first scoring setup, genre was worth 4 points, mood 3, energy up to 2, and valence up to 1. In this experiment, I reduced genre to 2 points and increased energy to up to 4 points; mood stayed at 3 and valence at 1. The maximum remains 10 points. This change gives energy similarity more influence and exact genre matches less influence.
+My recommender uses **content-based filtering**. It compares the user's preferences to each song instead of looking at what other listeners enjoy. In the current scoring rule, a matching genre adds 2 points and a matching mood adds 3 points. Energy similarity can add up to 4 points and valence similarity up to 1 point, depending on how close each value is to what the user wants. Each song receives a score out of 10, and the program sorts the songs and shows the top five with reasons for their scores.
 
-For my High-Energy Pop profile, the original top three were Sunrise City (9.93), Gym Hero (6.76), and Rooftop Lights (5.78). With the revised weights, they are Sunrise City (9.87), Rooftop Lights (7.60), and Gym Hero (6.60). Rooftop Lights moves above Gym Hero because it matches the preferred happy mood and is close in energy, while Gym Hero's genre-match advantage is smaller under the new weights. This demonstrates that changing weights changes rankings, but does not by itself prove the recommendations are more accurate; that would require checking them against listener judgments or other evaluation examples. The recommender uses a simple, editable formula rather than learning from listening history or other users. The starter project also includes an acoustic preference, but the current scoring formula does not use it.
+This is a rule-based program, not an AI model that learns from training data. I tested a weight change from genre 4, mood 3, energy 2, valence 1 to genre 2, mood 3, energy 4, valence 1. The revised weights are the ones currently active, and the maximum score remains 10. The CSV also has tempo, danceability, and acousticness, but the final scoring rule does not use those features.
 
 ---
 
 ## 4. Data  
 
-Describe the dataset the model uses.  
+I started with the 10 fictional songs in the provided data/songs.csv file and added 8 more, for **18 songs total**. The catalog includes styles such as pop, lofi, rock, jazz, ambient, synthwave, R&B, hip-hop, folk, classical, EDM, country, Latin, and metal. Every row includes a song title, artist, genre, mood, energy, tempo, valence, danceability, and acousticness.
 
-Prompts:  
-
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
+The dataset is small, and some genres and moods have only one song. The songs and their labels are examples for this simulation, not a real-world music catalog. The system also does not have listening history, skips, or ratings from actual users.
 
 ---
 
 ## 5. Strengths  
 
-Where does your system seem to work well  
-
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
+The recommender is easy to understand because every recommendation has a score and an explanation. It gave results that made sense for my main test profiles: **Sunrise City** for High-Energy Pop, **Midnight Coding** for Chill Lofi, and **Storm Runner** for Deep Intense Rock. I also liked being able to change one weight and immediately see how the rankings responded. It was a simple way to understand how recommendation rules affect what people are shown.
 
 ---
 
@@ -155,23 +137,16 @@ I compared my initial weights (genre 4, mood 3, energy up to 2, valence up to 1)
 
 ## 8. Future Work  
 
-Ideas for how you would improve the model next.  
+If I kept developing VibeMatch, I would:
 
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
+1. Add more songs, especially moods and genres that are missing or underrepresented.
+2. Let users like, skip, or rate songs so the system can adjust to their feedback.
+3. Try a more balanced scoring system and use features like acousticness or danceability to find good matches across different genres.
 
 ---
 
 ## 9. Personal Reflection  
 
-A few sentences about your experience.  
+My biggest learning moment was realizing that a recommendation system does not have to be super complicated to give results that feel personal. At first, I thought it would take a lot more AI to recommend music, but even a few scoring rules gave me songs that made sense for different users. I was surprised that **Gym Hero** could rank highly for both happy pop and intense rock, but for different reasons. It showed me that the weights I choose can change what the program thinks is a good match.
 
-Prompts:  
-
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
+Using an AI coding assistant helped me understand the CSV code, work through the scoring logic, and think of unusual test profiles. But I still needed to check the output myself. I even had to fix an import error before the program ran correctly, which reminded me that generated code is not always ready to use right away. The Sad EDM test was another important example: the program chose a song that matched the genre but not the mood. That made me realize that a high score does not always mean a recommendation actually feels right to a person. If I continued this project, I would add more variety and let users give feedback so the recommender could improve over time.
