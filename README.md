@@ -103,18 +103,29 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Sample Recommendation Output
 
-Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
 
-```
-# e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
+```text
+Loaded songs: 18
+User profile: pop / happy / energy 0.80 / valence 0.80
+
+Top 5 recommendations:
+
+1. Sunrise City by Neon Echo - Score: 9.92/10
+   Because: genre match (+4.00); mood match (+3.00); energy similarity (+1.96); valence similarity (+0.96)
+
+2. Gym Hero by Max Pulse - Score: 6.71/10
+   Because: genre match (+4.00); mood differs (+0.00); energy similarity (+1.74); valence similarity (+0.97)
+
+3. Rooftop Lights by Indigo Parade - Score: 5.91/10
+   Because: genre differs (+0.00); mood match (+3.00); energy similarity (+1.92); valence similarity (+0.99)
+
+4. Concrete Dreams by Metro Verse - Score: 2.88/10
+   Because: genre differs (+0.00); mood differs (+0.00); energy similarity (+1.98); valence similarity (+0.90)
+
+5. Midnight Salsa by Luna Sol - Score: 2.84/10
+   Because: genre differs (+0.00); mood differs (+0.00); energy similarity (+1.92); valence similarity (+0.92)
 ```
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
 
 ---
 

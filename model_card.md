@@ -21,16 +21,9 @@ Prompts:
 
 ## 3. How the Model Works  
 
-Explain your scoring approach in simple language.  
+My music recommender uses content-based filtering to suggest songs based on the user's preferences. It compares each song's genre, mood, energy, and valence with what the user likes. I gave genre and mood more points because I think those features make the biggest difference when choosing what music to listen to. Energy and valence also contribute to the score based on how close they are to the user's preferred values.
 
-Prompts:  
-
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
-
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+Each song gets a score out of 10, and the system ranks the songs from highest to lowest. It then recommends the top five songs and explains why they received their scores. Unlike real streaming platforms, my recommender does not learn from listening history or other users. Instead, it uses a simple scoring formula that is easy to understand and change. The starter project also includes an acoustic preference, but my current scoring system does not use it.
 
 ---
 
